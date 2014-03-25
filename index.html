@@ -1,79 +1,429 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>Reverse Guitar Chord Lookup</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'>
+<style>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Guitar Chord Lookup : " />
+body {
+  font: normal 100% Arial, Helvetica, sans-serif;
+  -webkit-text-size-adjust: none;
+/*  background-color: #ECFFEC;*/
+  
+  background: #f2f2f2;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjIzJSIgc3RvcC1jb2xvcj0iI2YwZjBmMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2U4ZThlOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc5JSIgc3RvcC1jb2xvcj0iI2RhZGFkYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjY2NjY2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 23%, #e8e8e8 50%, #dadada 79%, #cccccc 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(23%,#f0f0f0), color-stop(50%,#e8e8e8), color-stop(79%,#dadada), color-stop(100%,#cccccc));
+  background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 23%,#e8e8e8 50%,#dadada 79%,#cccccc 100%);
+  background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 23%,#e8e8e8 50%,#dadada 79%,#cccccc 100%);
+  background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 23%,#e8e8e8 50%,#dadada 79%,#cccccc 100%);
+  background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 23%,#e8e8e8 50%,#dadada 79%,#cccccc 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#cccccc',GradientType=0 );
+  
+  
+}
+#wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding-bottom: 20px;
+}
+h1 {
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 3em;
+  font-weight: normal;
+  text-align: center;
+  
+}
+p {
+  width: 80%;
+  margin-left: 10%;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  text-align: justify;
+}
+table {
+  width: 100%;
+  background-image: url('fretboardpic.png');
+  background-position: 0% 25%; 
+  background-repeat: no-repeat;
+  border: 1px solid transparent;
+}
+#sideTable {
+  width: 100%;
+  border: 1px solid transparent;
+  background-image: none;
+}
+#sideTable label {
+  margin-right: 1em;
+  text-align: center;
+  font-size: 1em;
+}
+#tableDiv {
+  width: 743px;
+  display: inline-block;
+  
+}
+#fieldsSection {
+  display: inline-block;
+  margin: 0;
+  width: 100px;
+  float: left;
+}
+#fieldsSection label {
+  height: 1em;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  
+}
+#fieldsSection input[type="text"] {
+  height: 1em;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+}
+#minimain {
+  overflow: auto;
+  height: 100%;
+  left: 0px;
+}
+#main {
+  width: 843px;
+  /*margin: 0 auto;*/
+}
+td {
+  padding: .2em 0 .2em 0;
+  border: 1px solid transparent;
+  left: 5em;
+  text-align: center;
+}
+#sideTable td {
+  padding: .15em 0 .1em 0;
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+}
+#sideTable input[type="text"] {
+  border: 1px solid #E4E4E4;
+  font-size: 1em;
+}
 
-    <title>Guitar Chord Lookup</title>
-  </head>
+input[type="radio"] {
+    /* hide the inputs */
+    opacity: 0;
 
-  <body>
+}
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/natalieweesh/guitar-chord-lookup">View on GitHub</a>
+/* style your lables/button */
+input[type="radio"] + label {
+    /* keep pointer so that you get the little hand showing when you are on a button */
+    margin-left: -1.2em;
+    cursor: pointer;
+    /* the following are the styles */
+    padding: .2em .8em .2em .4em;
+    border: 1px solid transparent;
+    color: transparent;
+    border-radius: 100px;
+}
 
-          <h1 id="project_title">Guitar Chord Lookup</h1>
-          <h2 id="project_tagline"></h2>
+input[type="radio"]:checked + label {
+    /* style for the checked/selected state */
+    background: #08CC18;
+    border: 1px solid #059611;
+    color: transparent;
+}
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/natalieweesh/guitar-chord-lookup/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/natalieweesh/guitar-chord-lookup/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+input[name="chordFingering"] {
+  visibility: hidden;
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+}
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+#goButton {
+  cursor: pointer;
+  position: fixed;
+  right: 0em;
+  top: 0em;
+  border: none;
+  color: #ffffff;
+  background-image: url('redpic.png');
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 129px;
+  background-color: transparent;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  white-space: normal;
+  
+}
+#chordP {
+  text-align: center;
+}
+#chordName {
+  border: 1px dotted #08CC18;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 2em; 
+  text-align: center;
+}
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Guitar Chord Lookup maintained by <a href="https://github.com/natalieweesh">natalieweesh</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+#resetButton {
+  cursor: pointer;
+  color: #ffffff;
+  background-image: url('bluepic.png');
+  width: 129px;
+  height: 150px;
+  background-color: transparent;
+  border: none;
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+  white-space: normal;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.lastRow td {
+  font-family: 'Patrick Hand SC', Verdana, Arial, Helvetica, sans-serif;
+}
+}
+@media (min-width: 1000px) {
+  #wrapper {
+    width: 900px;
+    background-color: #ffffff;
+  }
+  #goButton {
+    right: 5%;
     
+  }
+  #resetButton {
+    left: 5%;
+  }
+}
 
-  </body>
+@media (min-width: 1500px) {
+  #goButton {
+    right: 10%;
+  }
+  #resetButton {
+    left: 10%;
+  }
+}
+
+@media (max-width: 800px) {
+  #header {
+    margin-top: 120px;
+  }
+}
+@media (max-width: 600px) {
+  #wrapper {
+    width: 95%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding-bottom: 20px;
+  } 
+}
+
+</style>
+
+<script type="text/javascript">
+
+var chords = new Array();
+chords[0] = ['A major', 'X02220', '04X250', '577655', 'X47XX5', '04X250', 'X47XX5', 'X02225', 'X07650', 'XXX9109', 'X0222X', 'XXX650'];
+chords[1] = ['A minor', 'X02210', 'X07555', 'X32210', '577555', 'XX7555', 'XXX550', 'X77555', 'XX75XX', 'XXX555', 'X0X210', 'X0X555'];
+chords[2] = ['B major', 'X24442', '799877', 'XX4442', '7998XX', 'X14161616X', 'XXX442', 'X69XXX', 'XX4447', 'X2444X', 'XX444X'];
+chords[3] = ['B minor', 'X24432', '224432', 'XX0432', 'XX4432', 'X2443X', '799777', 'XX12111210', 'X1416161514', 'X99777', 'XX9777', 'XXX432', 'XX9111210', 'X04432'];
+chords[4] = ['C major', 'X32010', '332010', '81010988', '335553', 'X35550', '032010', 'XXX010', 'X35553', 'X3555X', '8XX9XX', 'X3201X', 'XX5558', 'XXX553'];
+chords[5] = ['C minor', 'X35543', 'XX5543', '81010888', 'X3554X', 'XXX543', 'X3X04X', 'X3X543', 'X3101X', '8655XX', 'XX10121311', 'X15131213X'];
+chords[6] = ['D major', 'XX0232', 'X54232', '200232', 'X04232', 'XX0775', '101212111010', '557775', 'X57775', 'X5777X', 'X5423X', '109X11XX', 'X00232'];
+chords[7] = ['D minor', 'XX0231', '557765', '101212101010', 'X57765', '10XX10XX', 'XXXX610', 'XX7765', '1X023X', 'XX776X', 'XX12101010', '1012X10X10'];
+chords[8] = ['E major', '022100', 'X76450', '779997', '121414131212', '476454', 'XXX454', 'X79997', 'X7999X', '0221XX', 'X76454', 'XX999X', 'XXX997', 'XX99912', 'X76XXX'];
+chords[9] = ['E minor', 'X35453', '022000', '3X2000', '779987', 'XX5453', 'X79987', '0220XX', '0XXX87', 'XXX987', 'X75XXX', 'X2545X', 'XX9987', 'X7X08X', '025000'];
+chords[10] = ['F major', 'X03211', 'X33211', 'XX3211', '133211', 'X87565', '1X3211', 'XX3565', 'X8XX10X', 'X81010108', 'XXX211', 'XXX10108'];
+chords[11] = ['F minor', '133111', 'X33111', 'XX3111', '133111', 'X8101098', 'XX3564', 'XXX1098', 'X8656X', '13111010XX', 'XXX564'];
+chords[12] = ['G major', '320003', 'XX0433', 'XX0787', 'X1012121210', '320033', '355433', '3X0003', 'XXX003', 'XXX787', '3554XX', 'X10121212X', '320XXX', 'XX5433', 'X05433'];
+chords[13] = ['G minor', '355333', 'X1012121110', '000000', 'X55333', 'XX5333', 'XX12121110', 'X5X333', '31XXXX', 'XX5786', 'X10878X', '15131212XX'];
+chords[14] = ['A\u266F major / B\u266D major', 'X13331', '113331', 'XX0331', '688766', '653XXX', '6533XX', '65333X', '653X3X', '65XX6X', '68X7XX', '68X7X6', '68X766', '68X76X', '6XX76X', '6X876X', '6X8766', 'X1333X', '65XXXX', 'XXXX36', 'XXXX66', 'X58XXX', 'XX8766', 'X8X766', 'X88766'];
+chords[15] = ['C\u266F major / D\u266D major', 'XX3121', 'X43121', '911111099', '446664', 'X46664', 'XX6664', 'X4666X', 'XX666X', '986XXX', '9866XX', '98666X', '986X6X', '98XX9X', '911X10XX', '911X10X9', '911X1099', 'XXX121', 'X8666X', 'XX3124', '8X666X', 'XXX664', '9X986X'];
+chords[16] = ['D\u266F major / E\u266D major', 'XX5343', '668886', '111313121111', 'X11343', 'XX1343', '11108XXX', '111088XX', '1110888X', '11108X8X', '1110XX11X', '1113X12XX', '1113X12X11', '1113X121111', '1113X1211X', '11XX1211X', '11X131211X', '11X13121111', 'X65343', 'X6X08X', 'XXX886', 'X10888X', 'X6888X', '6X888X', 'X1134X', 'XX534X', 'XX888X'];
+chords[17] = ['F\u266F major / G\u266D major', '244322', '991111119', 'X44322', 'XX4322', '2443XX', 'X9111111X', 'X98676', 'XX867X', '21XXXX', 'XXX676', 'XX111111X', '24X3XX', '69XXXX', '2X432X', '8X111111X', '644XXX', 'X4X32X', 'XXX111111'];
+chords[18] = ['G\u266F major / A\u266D major', '466544', '111113131311', 'X3111X', '431XXX', '4311XX', '43111X', '431X1X', '43XX4X', '46X5XX', '46X5X4', '46X544', '46X54X', '4XX54X', '4X111X', 'X3654X', 'X11131313X', '8X1089X', 'XX6544', 'XXX131311', 'XX111X', '4665XX', 'X11108XX', 'X6654X'];
+chords[19] = ['A\u266F minor / B\u266D minor', 'X13321', '113321', 'XX866X', '643XXX', '6433XX', '64XX6X', '68X6XX', '6886XX', '6886X6', '688666', '68866X', '68X6X6', '68X666', '68X6X9', 'XX3321', '64XXXX', 'XXX321', 'XXX666', 'X886XX'];
+chords[20] = ['C\u266F minor / D\u266D minor', 'XX2120', '446654', '91111999', 'X46654', 'X466X0', 'XX2120', 'XX6654', 'X4665X', 'X111199X', 'X42XXX', '97XXXX', 'XX11999', '976XXX', '9766XX', '97XX9X', '911X9XX', '911119XX'];
+chords[21] = ['D\u266F minor / E\u266D minor', 'XX4342', '1198XXX', '11988XX', '119XX11X', '1113X11XX', '11131311XX', '11131311X11', '111313111111', '1113131111X', '1113X11X11', '1113X111111', '1113X11X14', '1113X111114', 'X68876', 'XX434X', 'X6887X'];
+chords[22] = ['F\u266F minor / G\u266D minor', '244222', 'X44222', 'XX4222', 'X9111110X', '20XX2X', '20XX22', '20X222', '20X22X', '24X2XX', '2442XX', '2442X2', '24422X', '24X2X2', '2XX22X'];
+chords[23] = ['G\u266F minor / A\u266D minor', '466444', 'X6644X', '46X4XX', '42XXXX', '46644X'];
+chords[24] = ['A major 7', 'X02120', '5X665X', 'X11119100', 'XXX141416', '54XX54', '5766XX', '5X6655', '5X2X24', '5X2224', '1716XX1716', '17191818XX'];
+chords[25] = ['A\u266F major 7 / B\u266D major 7', '65XX65', '6877XX', '6X776X', '6X7766', '6X3X35', '6X3335', '1817XX1817', '18201919XX', '18X191918X', '18X19191818', '18X15X1517', '18X15151517', 'XX8101010', 'X1323X', '6X77XX', 'X13231', 'XX8765', 'XX3335', 'X5736X', '113231', '6X7765', 'X132XX', 'X10231'];
+chords[26] = ['B major 7', 'X2434X', '7X887X', '76XX76', '7988XX', '7X8877', '7X4X46', '7X4446', '1918XX1918', '19212020XX', '19X202019X', '19X20201919'];
+chords[27] = ['C major 7', 'X3545X', '8X998X', 'X32000', '332000', '81010900', 'X35500', '8X99XX', 'X32003', 'X35000', 'XX5557', 'XX9988'];
+chords[28] = ['C\u266F major 7 / D\u266D major 7', '98XX98', '9111010XX', '9X10109X', '9X101099', '9X6X68', '9X6668', '2120XX2120', '21232222XX', '21X222221X', '21X22222121', '21X18X1820', '21X18181820', 'X4656X', 'X4X56X', 'X46564'];
+chords[29] = ['D major 7', 'XX0222', 'X5767X', 'X54222', 'X57675', 'X546XX', '109XX109', '10121111XX', '10X111110X', '10X11111010', '10X7X79', '10X7779', '2221XX2221'];
+chords[30] = ['D\u266F major 7 / E\u266D major 7', '1110XX1110', '11131212XX', '11X121211X', '11X12121111', '11X8X810', '11X88810', '2322XX2322', '23X20X2022', '23X20202022', '36X33X', '36533X', '365333', 'X68786', 'XX1333', 'X6533X', 'XX133X', 'X657XX', 'XX88810', 'X6878X'];
+chords[31] = ['E major 7', '021100', 'X7989X', '0X9800', '069900', 'X22444', 'X79897', '0211XX', '0211X0', '02110X', '022140'];
+chords[32] = ['F major 7', '1X221X', 'X810910X', '133210', 'XX10101012', 'XXX210', 'XX3210', 'X8109XX', '1X22XX', 'XX3010', 'X8109108', 'X33210', 'X33555'];
+chords[33] = ['F\u266F major 7 / G\u266D major 7', '21XX21', '2433XX', '2X332X', '2X3322', '1413XX1413', '14161515XX', '14X151514X', '14X15151414', '14X11X1113', '14X11111113', '69X66X', '69866X', '684XXX', '2X4321'];
+chords[34] = ['G major 7', '3X443X', 'X10121112X', 'X20032', '3X0002', 'X2X032', 'XX911810', 'X1012111210', 'XX5432', 'XX5777', '7X577X', 'XX0002', 'X54003'];
+chords[35] = ['G\u266F major 7 / A\u266D major 7', '43XX43', '4655XX', '4X554X', '4X5544', '4X1X13', '4X1113', '1615XX1615', '16181717XX', '16X171716X', '16X17171616', '16X13X1315', '16X13131315', '4350XX', 'X11XX1315', 'XXX888', 'XXX121311', 'XX6543', 'X1110888', 'X111009X', '4X55XX', 'X10X0911', '4X5543'];
+/*chords[36] = [];
+chords[37] = [];
+chords[38] = [];
+chords[39] = [];
+chords[40] = [];
+chords[] = [];
+*/
+
+
+
+function findChord() {
+  if (document.myForm.lowEString.value=='')
+    document.myForm.lowEString.value='X';
+  if (document.myForm.aString.value=='')
+    document.myForm.aString.value='X';
+  if (document.myForm.dString.value=='')
+    document.myForm.dString.value='X';
+  if (document.myForm.gString.value=='')
+    document.myForm.gString.value='X';
+  if (document.myForm.bString.value=='')
+    document.myForm.bString.value='X';
+  if (document.myForm.highEString.value=='')
+    document.myForm.highEString.value='X';
+      
+  var myStr = document.myForm.lowEString.value + document.myForm.aString.value + document.myForm.dString.value
+        + document.myForm.gString.value + document.myForm.bString.value + document.myForm.highEString.value;
+  myStr = myStr.toUpperCase();
+
+  var foundit = false;  
+  var theRightStuff;
+  //while(foundit==false) {
+    //alert('chords.length=' + chords.length);
+    for (i=0; i<chords.length; i++) {
+    //  alert('chords[' + i + '].length=' + chords[i].length);
+      for (j=0; j<chords[i].length; j++) {
+        if (myStr == chords[i][j].toString()) {
+          document.getElementById('chordName').value = chords[i][0];
+          document.myForm.chordFingering.value = myStr;
+          foundit = true;
+        }
+
+      }
+    }
+  //}
+  if (foundit == false) {
+    document.getElementById('chordName').value = "sorry, chord not found!";
+    document.myForm.chordFingering.value = myStr;
+  }
+            
+
+} // end function findChord
+
+function refreshFields() {
+  document.myForm.lowEString.value = "";
+  document.myForm.aString.value = "";
+  document.myForm.dString.value = "";
+  document.myForm.gString.value = "";
+  document.myForm.bString.value = "";
+  document.myForm.highEString.value = "";
+  document.getElementById('chordName').value = "";
+  document.myForm.chordFingering.value = "";
+  document.fretBoard.reset();
+  
+} // end function refreshFields
+
+function transmitNumber(string, fret) {
+  /*if (string == 'h')
+    document.myForm.highEString.value = fret;
+  else if (string == 'b')
+    document.myForm.bString.value = fret;
+  else if
+  */
+  switch (string) {
+    case 'h':
+      document.myForm.highEString.value = fret;
+      break;
+    case 'b':
+      document.myForm.bString.value = fret;
+      break;
+    case 'g':
+      document.myForm.gString.value = fret;
+      break;
+    case 'd':
+      document.myForm.dString.value = fret;
+      break;
+    case 'a':
+      document.myForm.aString.value = fret;
+      break;
+    case 'l':
+      document.myForm.lowEString.value = fret;
+      break;
+  }
+} // end transmitNumber
+
+
+$(window).scroll(function () {
+  var ttop = $('#wrapper').position().left;
+  var hcltb = $('#wrapper').width();
+  var mtop = $(window).scrollLeft();
+  if(mtop > ttop) {
+    if (mtop < (ttop+hcltb-400))
+      { $('#main').css('left', (mtop-ttop+50));}
+    }
+  });
+
+
+</script>
+</head>
+<body onload="refreshFields()">
+<div id="wrapper">
+<div id="header">
+<h1>reverse guitar chord lookup</h1>
+
+<p>Hey there players! Ever figure out a cool chord, or find a random tab with crazy finger positions and wonder what chord you were playing? Well, fret no more! REVERSE GUITAR CHORD LOOKUP will tell you what that chord is actually called! Click on the FRETBOARD below to PLACE YOUR FINGERS, or click to the left of the nut to play an open string, or click all the way to the left of the head to mute a string. Click the RED PICK to DISCOVER the mysterious chord name. Finish with the BLUE PICK to CLEAR the fingerings and start again.</p>
+</div> <!-- end div header -->
+<div id="minimain">
+<div id="main">
+
+<div id="fieldsSection">
+<form name="myForm">
+
+<table id="sideTable">
+<tr><td><label>e</label><input name="highEString" type="text" size=2 readonly /> </td></tr>
+<tr><td><label>B</label><input name="bString" type="text" size=2 readonly /> </td></tr>
+<tr><td><label>G</label><input name="gString" type="text" size=2 readonly /> </td></tr>
+<tr><td><label>D</label><input name="dString" type="text" size=2 readonly /> </td></tr>
+<tr><td><label>A</label><input name="aString" type="text" size=2 readonly /> </td></tr>
+<tr><td><label>E</label><input name="lowEString" type="text" size=2 readonly /> </td></tr>
+</table>
+
+<input type="text" name="chordFingering" /> <br/>
+<input id="resetButton" type="reset" value="CLEAR FINGERS" onclick="document.fretBoard.reset(); refreshFields()"/> <br/>
+
+<input id="goButton" type="button" value="NAME THAT CHORD!" onclick="findChord()" />
+
+</form>
+</div> <!-- end div fieldsSection -->
+
+<div id="tableDiv">
+
+<form name="fretBoard">
+<table>
+<tr><td><input id="eX" type="radio" name="highEButton" value="X" onclick="transmitNumber('h', 'X')"/><label for="eX">.</label></td>     <td><input id="e0" type="radio" name="highEButton" value="0" onclick="transmitNumber('h', 0)" /><label for="e0">.</label></td>      <td><input id="e1" type="radio" name="highEButton" value="1" onclick="transmitNumber('h', 1)" /><label for="e1">.</label></td>    <td><input id="e2" type="radio" name="highEButton" value="2" onclick="transmitNumber('h', 2)" /><label for="e2">.</label></td>    <td><input id="e3" type="radio" name="highEButton" value="3" onclick="transmitNumber('h', 3)" /><label for="e3">.</label></td>      <td><input id="e4" type="radio" name="highEButton" value="4" onclick="transmitNumber('h', 4)" /><label for="e4">.</label></td>      <td><input id="e5" type="radio" name="highEButton" value="5" onclick="transmitNumber('h', 5)" /><label for="e5">.</label></td>      <td><input id="e6" type="radio" name="highEButton" value="6" onclick="transmitNumber('h', 6)" /><label for="e6">.</label></td>      <td><input id="e7" type="radio" name="highEButton" value="7" onclick="transmitNumber('h', 7)" /><label for="e7">.</label></td>      <td><input id="e8" type="radio" name="highEButton" value="8" onclick="transmitNumber('h', 8)" /><label for="e8">.</label></td>      <td><input id="e9" type="radio" name="highEButton" value="9" onclick="transmitNumber('h', 9)" /><label for="e9">.</label></td>      <td><input id="e10" type="radio" name="highEButton" value="10" onclick="transmitNumber('h', 10)" /><label for="e10">.</label></td>      <td><input id="e11" type="radio" name="highEButton" value="11" onclick="transmitNumber('h', 11)" /><label for="e11">.</label></td>      <td><input id="e12" type="radio" name="highEButton" value="12" onclick="transmitNumber('h', 12)" /><label for="e12">.</label></td>      <td><input id="e13" type="radio" name="highEButton" value="13" onclick="transmitNumber('h', 13)" /><label for="e13">.</label></td>      <td><input id="e14" type="radio" name="highEButton" value="14" onclick="transmitNumber('h', 14)" /><label for="e14">.</label></td>      <td><input id="e15" type="radio" name="highEButton" value="15" onclick="transmitNumber('h', 15)" /><label for="e15">.</label></td>      <td><input id="e16" type="radio" name="highEButton" value="16" onclick="transmitNumber('h', 16)" /><label for="e16">.</label></td>      <td><input id="e17" type="radio" name="highEButton" value="17" onclick="transmitNumber('h', 17)" /><label for="e17">.</label></td>      <td><input id="e18" type="radio" name="highEButton" value="18" onclick="transmitNumber('h', 18)" /><label for="e18">.</label></td>      <td><input id="e19" type="radio" name="highEButton" value="19" onclick="transmitNumber('h', 19)" /><label for="e19">.</label></td>    <td><input id="e20" type="radio" name="highEButton" value="20" onclick="transmitNumber('h', 20)" /><label for="e20">.</label></td>      <td><input id="e21" type="radio" name="highEButton" value="21" onclick="transmitNumber('h', 21)" /><label for="e21">.</label></td></tr>
+<tr><td><input id="bX" type="radio" name="bButton" value="X" onclick="transmitNumber('b', 'X')" /><label for="bX">.</label></td>      <td><input id="b0" type="radio" name="bButton" value="0" onclick="transmitNumber('b', 0)" /><label for="b0">.</label></td>        <td><input id="b1" type="radio" name="bButton" value="1" onclick="transmitNumber('b', 1)" /><label for="b1">.</label></td>      <td><input id="b2" type="radio" name="bButton" value="2" onclick="transmitNumber('b', 2)" /><label for="b2">.</label></td>      <td><input id="b3" type="radio" name="bButton" value="3" onclick="transmitNumber('b', 3)" /><label for="b3">.</label></td>        <td><input id="b4" type="radio" name="bButton" value="4" onclick="transmitNumber('b', 4)" /><label for="b4">.</label></td>        <td><input id="b5" type="radio" name="bButton" value="5" onclick="transmitNumber('b', 5)" /><label for="b5">.</label></td>        <td><input id="b6" type="radio" name="bButton" value="6" onclick="transmitNumber('b', 6)" /><label for="b6">.</label></td>        <td><input id="b7" type="radio" name="bButton" value="7" onclick="transmitNumber('b', 7)" /><label for="b7">.</label></td>        <td><input id="b8" type="radio" name="bButton" value="8" onclick="transmitNumber('b', 8)" /><label for="b8">.</label></td>        <td><input id="b9" type="radio" name="bButton" value="9" onclick="transmitNumber('b', 9)" /><label for="b9">.</label></td>        <td><input id="b10" type="radio" name="bButton" value="10" onclick="transmitNumber('b', 10)" /><label for="b10">.</label></td>        <td><input id="b11" type="radio" name="bButton" value="11" onclick="transmitNumber('b', 11)" /><label for="b11">.</label></td>        <td><input id="b12" type="radio" name="bButton" value="12" onclick="transmitNumber('b', 12)" /><label for="b12">.</label></td>        <td><input id="b13" type="radio" name="bButton" value="13" onclick="transmitNumber('b', 13)" /><label for="b13">.</label></td>        <td><input id="b14" type="radio" name="bButton" value="14" onclick="transmitNumber('b', 14)" /><label for="b14">.</label></td>        <td><input id="b15" type="radio" name="bButton" value="15" onclick="transmitNumber('b', 15)" /><label for="b15">.</label></td>        <td><input id="b16" type="radio" name="bButton" value="16" onclick="transmitNumber('b', 16)" /><label for="b16">.</label></td>        <td><input id="b17" type="radio" name="bButton" value="17" onclick="transmitNumber('b', 17)" /><label for="b17">.</label></td>        <td><input id="b18" type="radio" name="bButton" value="18" onclick="transmitNumber('b', 18)" /><label for="b18">.</label></td>        <td><input id="b19" type="radio" name="bButton" value="19" onclick="transmitNumber('b', 19)" /><label for="b19">.</label></td>      <td><input id="b20" type="radio" name="bButton" value="20" onclick="transmitNumber('b', 20)" /><label for="b20">.</label></td>        <td><input id="b21" type="radio" name="bButton" value="21" onclick="transmitNumber('b', 21)" /><label for="b21">.</label></td></tr>
+<tr><td><input id="gX" type="radio" name="gButton" value="X" onclick="transmitNumber('g', 'X')" /><label for="gX">.</label></td>      <td><input id="g0" type="radio" name="gButton" value="0" onclick="transmitNumber('g', 0)" /><label for="g0">.</label></td>        <td><input id="g1" type="radio" name="gButton" value="1" onclick="transmitNumber('g', 1)" /><label for="g1">.</label></td>      <td><input id="g2" type="radio" name="gButton" value="2" onclick="transmitNumber('g', 2)" /><label for="g2">.</label></td>      <td><input id="g3" type="radio" name="gButton" value="3" onclick="transmitNumber('g', 3)" /><label for="g3">.</label></td>        <td><input id="g4" type="radio" name="gButton" value="4" onclick="transmitNumber('g', 4)" /><label for="g4">.</label></td>        <td><input id="g5" type="radio" name="gButton" value="5" onclick="transmitNumber('g', 5)" /><label for="g5">.</label></td>        <td><input id="g6" type="radio" name="gButton" value="6" onclick="transmitNumber('g', 6)" /><label for="g6">.</label></td>        <td><input id="g7" type="radio" name="gButton" value="7" onclick="transmitNumber('g', 7)" /><label for="g7">.</label></td>        <td><input id="g8" type="radio" name="gButton" value="8" onclick="transmitNumber('g', 8)" /><label for="g8">.</label></td>        <td><input id="g9" type="radio" name="gButton" value="9" onclick="transmitNumber('g', 9)" /><label for="g9">.</label></td>        <td><input id="g10" type="radio" name="gButton" value="10" onclick="transmitNumber('g', 10)" /><label for="g10">.</label></td>        <td><input id="g11" type="radio" name="gButton" value="11" onclick="transmitNumber('g', 11)" /><label for="g11">.</label></td>        <td><input id="g12" type="radio" name="gButton" value="12" onclick="transmitNumber('g', 12)" /><label for="g12">.</label></td>        <td><input id="g13" type="radio" name="gButton" value="13" onclick="transmitNumber('g', 13)" /><label for="g13">.</label></td>        <td><input id="g14" type="radio" name="gButton" value="14" onclick="transmitNumber('g', 14)" /><label for="g14">.</label></td>        <td><input id="g15" type="radio" name="gButton" value="15" onclick="transmitNumber('g', 15)" /><label for="g15">.</label></td>        <td><input id="g16" type="radio" name="gButton" value="16" onclick="transmitNumber('g', 16)" /><label for="g16">.</label></td>        <td><input id="g17" type="radio" name="gButton" value="17" onclick="transmitNumber('g', 17)" /><label for="g17">.</label></td>        <td><input id="g18" type="radio" name="gButton" value="18" onclick="transmitNumber('g', 18)" /><label for="g18">.</label></td>        <td><input id="g19" type="radio" name="gButton" value="19" onclick="transmitNumber('g', 19)" /><label for="g19">.</label></td>      <td><input id="g20" type="radio" name="gButton" value="20" onclick="transmitNumber('g', 20)" /><label for="g20">.</label></td>        <td><input id="g21" type="radio" name="gButton" value="21" onclick="transmitNumber('g', 21)" /><label for="g21">.</label></td></tr>
+<tr><td><input id="dX" type="radio" name="dButton" value="X" onclick="transmitNumber('d', 'X')" /><label for="dX">.</label></td>      <td><input id="d0" type="radio" name="dButton" value="0" onclick="transmitNumber('d', 0)" /><label for="d0">.</label></td>        <td><input id="d1" type="radio" name="dButton" value="1" onclick="transmitNumber('d', 1)" /><label for="d1">.</label></td>      <td><input id="d2" type="radio" name="dButton" value="2" onclick="transmitNumber('d', 2)" /><label for="d2">.</label></td>      <td><input id="d3" type="radio" name="dButton" value="3" onclick="transmitNumber('d', 3)" /><label for="d3">.</label></td>        <td><input id="d4" type="radio" name="dButton" value="4" onclick="transmitNumber('d', 4)" /><label for="d4">.</label></td>        <td><input id="d5" type="radio" name="dButton" value="5" onclick="transmitNumber('d', 5)" /><label for="d5">.</label></td>        <td><input id="d6" type="radio" name="dButton" value="6" onclick="transmitNumber('d', 6)" /><label for="d6">.</label></td>        <td><input id="d7" type="radio" name="dButton" value="7" onclick="transmitNumber('d', 7)" /><label for="d7">.</label></td>        <td><input id="d8" type="radio" name="dButton" value="8" onclick="transmitNumber('d', 8)" /><label for="d8">.</label></td>        <td><input id="d9" type="radio" name="dButton" value="9" onclick="transmitNumber('d', 9)" /><label for="d9">.</label></td>        <td><input id="d10" type="radio" name="dButton" value="10" onclick="transmitNumber('d', 10)" /><label for="d10">.</label></td>        <td><input id="d11" type="radio" name="dButton" value="11" onclick="transmitNumber('d', 11)" /><label for="d11">.</label></td>        <td><input id="d12" type="radio" name="dButton" value="12" onclick="transmitNumber('d', 12)" /><label for="d12">.</label></td>        <td><input id="d13" type="radio" name="dButton" value="13" onclick="transmitNumber('d', 13)" /><label for="d13">.</label></td>        <td><input id="d14" type="radio" name="dButton" value="14" onclick="transmitNumber('d', 14)" /><label for="d14">.</label></td>        <td><input id="d15" type="radio" name="dButton" value="15" onclick="transmitNumber('d', 15)" /><label for="d15">.</label></td>        <td><input id="d16" type="radio" name="dButton" value="16" onclick="transmitNumber('d', 16)" /><label for="d16">.</label></td>        <td><input id="d17" type="radio" name="dButton" value="17" onclick="transmitNumber('d', 17)" /><label for="d17">.</label></td>        <td><input id="d18" type="radio" name="dButton" value="18" onclick="transmitNumber('d', 18)" /><label for="d18">.</label></td>        <td><input id="d19" type="radio" name="dButton" value="19" onclick="transmitNumber('d', 19)" /><label for="d19">.</label></td>      <td><input id="d20" type="radio" name="dButton" value="20" onclick="transmitNumber('d', 20)" /><label for="d20">.</label></td>        <td><input id="d21" type="radio" name="dButton" value="21" onclick="transmitNumber('d', 21)" /><label for="d21">.</label></td></tr>
+<tr><td><input id="aX" type="radio" name="aButton" value="X" onclick="transmitNumber('a', 'X')" /><label for="aX">.</label></td>      <td><input id="a0" type="radio" name="aButton" value="0" onclick="transmitNumber('a', 0)" /><label for="a0">.</label></td>        <td><input id="a1" type="radio" name="aButton" value="1" onclick="transmitNumber('a', 1)" /><label for="a1">.</label></td>      <td><input id="a2" type="radio" name="aButton" value="2" onclick="transmitNumber('a', 2)" /><label for="a2">.</label></td>      <td><input id="a3" type="radio" name="aButton" value="3" onclick="transmitNumber('a', 3)" /><label for="a3">.</label></td>        <td><input id="a4" type="radio" name="aButton" value="4" onclick="transmitNumber('a', 4)" /><label for="a4">.</label></td>        <td><input id="a5" type="radio" name="aButton" value="5" onclick="transmitNumber('a', 5)" /><label for="a5">.</label></td>        <td><input id="a6" type="radio" name="aButton" value="6" onclick="transmitNumber('a', 6)" /><label for="a6">.</label></td>        <td><input id="a7" type="radio" name="aButton" value="7" onclick="transmitNumber('a', 7)" /><label for="a7">.</label></td>        <td><input id="a8" type="radio" name="aButton" value="8" onclick="transmitNumber('a', 8)" /><label for="a8">.</label></td>        <td><input id="a9" type="radio" name="aButton" value="9" onclick="transmitNumber('a', 9)" /><label for="a9">.</label></td>        <td><input id="a10" type="radio" name="aButton" value="10" onclick="transmitNumber('a', 10)" /><label for="a10">.</label></td>        <td><input id="a11" type="radio" name="aButton" value="11" onclick="transmitNumber('a', 11)" /><label for="a11">.</label></td>        <td><input id="a12" type="radio" name="aButton" value="12" onclick="transmitNumber('a', 12)" /><label for="a12">.</label></td>        <td><input id="a13" type="radio" name="aButton" value="13" onclick="transmitNumber('a', 13)" /><label for="a13">.</label></td>        <td><input id="a14" type="radio" name="aButton" value="14" onclick="transmitNumber('a', 14)" /><label for="a14">.</label></td>        <td><input id="a15" type="radio" name="aButton" value="15" onclick="transmitNumber('a', 15)" /><label for="a15">.</label></td>        <td><input id="a16" type="radio" name="aButton" value="16" onclick="transmitNumber('a', 16)" /><label for="a16">.</label></td>        <td><input id="a17" type="radio" name="aButton" value="17" onclick="transmitNumber('a', 17)" /><label for="a17">.</label></td>        <td><input id="a18" type="radio" name="aButton" value="18" onclick="transmitNumber('a', 18)" /><label for="a18">.</label></td>        <td><input id="a19" type="radio" name="aButton" value="19" onclick="transmitNumber('a', 19)" /><label for="a19">.</label></td>      <td><input id="a20" type="radio" name="aButton" value="20" onclick="transmitNumber('a', 20)" /><label for="a20">.</label></td>        <td><input id="a21" type="radio" name="aButton" value="21" onclick="transmitNumber('a', 21)" /><label for="a21">.</label></td></tr>
+<tr><td><input id="EX" type="radio" name="lowEButton" value="X" onclick="transmitNumber('l', 'X')" /><label for="EX">.</label></td>     <td><input id="E0" type="radio" name="lowEButton" value="0" onclick="transmitNumber('l', 0)" /><label for="E0">.</label></td>     <td><input id="E1" type="radio" name="lowEButton" value="1" onclick="transmitNumber('l', 1)" /><label for="E1">.</label></td>   <td><input id="E2" type="radio" name="lowEButton" value="2" onclick="transmitNumber('l', 2)" /><label for="E2">.</label></td>   <td><input id="E3" type="radio" name="lowEButton" value="3" onclick="transmitNumber('l', 3)" /><label for="E3">.</label></td>     <td><input id="E4" type="radio" name="lowEButton" value="4" onclick="transmitNumber('l', 4)" /><label for="E4">.</label></td>     <td><input id="E5" type="radio" name="lowEButton" value="5" onclick="transmitNumber('l', 5)" /><label for="E5">.</label></td>     <td><input id="E6" type="radio" name="lowEButton" value="6" onclick="transmitNumber('l', 6)" /><label for="E6">.</label></td>     <td><input id="E7" type="radio" name="lowEButton" value="7" onclick="transmitNumber('l', 7)" /><label for="E7">.</label></td>     <td><input id="E8" type="radio" name="lowEButton" value="8" onclick="transmitNumber('l', 8)" /><label for="E8">.</label></td>     <td><input id="E9" type="radio" name="lowEButton" value="9" onclick="transmitNumber('l', 9)" /><label for="E9">.</label></td>     <td><input id="E10" type="radio" name="lowEButton" value="10" onclick="transmitNumber('l', 10)" /><label for="E10">.</label></td>     <td><input id="E11" type="radio" name="lowEButton" value="11" onclick="transmitNumber('l', 11)" /><label for="E11">.</label></td>     <td><input id="E12" type="radio" name="lowEButton" value="12" onclick="transmitNumber('l', 12)" /><label for="E12">.</label></td>     <td><input id="E13" type="radio" name="lowEButton" value="13" onclick="transmitNumber('l', 13)" /><label for="E13">.</label></td>     <td><input id="E14" type="radio" name="lowEButton" value="14" onclick="transmitNumber('l', 14)" /><label for="E14">.</label></td>     <td><input id="E15" type="radio" name="lowEButton" value="15" onclick="transmitNumber('l', 15)" /><label for="E15">.</label></td>     <td><input id="E16" type="radio" name="lowEButton" value="16" onclick="transmitNumber('l', 16)" /><label for="E16">.</label></td>     <td><input id="E17" type="radio" name="lowEButton" value="17" onclick="transmitNumber('l', 17)" /><label for="E17">.</label></td>     <td><input id="E18" type="radio" name="lowEButton" value="18" onclick="transmitNumber('l', 18)" /><label for="E18">.</label></td>     <td><input id="E19" type="radio" name="lowEButton" value="19" onclick="transmitNumber('l', 19)" /><label for="E19">.</label></td>   <td><input id="E20" type="radio" name="lowEButton" value="20" onclick="transmitNumber('l', 20)" /><label for="E20">.</label></td>     <td><input id="E21" type="radio" name="lowEButton" value="21" onclick="transmitNumber('l', 21)" /><label for="E21">.</label></td></tr>
+
+<tr class="lastRow"><td>X</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
+
+</table>
+</div> <!-- end div tableDiv -->
+
+
+</form>
+
+</div> <!-- end div main -->
+</div> <!-- end div minimain -->
+<p id="chordP">
+<input type="textarea" rows=2 cols=25 id="chordName" />
+</p>
+</div> <!-- end div wrapper-->
+</body>
 </html>
